@@ -1,0 +1,13 @@
+Projeto para análise variada de dados das obras acompanhadas pela Diretoria de Gestão de Rede Física.
+
+A principal base dados sera a planilha de acompanhamento, a qual será baixada por meio do pacote de interação com o GDrive, assim como no painel de acompanhamento anterior.
+
+A pasta /rdata contem os diversos objetos R que vierem a ser elaborados.
+
+No script "download-data.R", é feito o download da planilha do drive, bem como o tratamento dos dados, com as seguintes operações:
+
+*Renomear as colunas para melhor tratamento;
+
+Alguns detalhes sobre os novos nomes: "predio" é se é anexo ou principal; "ocupação" é a forma de ocupação; "data_tc" é a data de emissão do termo de compromisso; "status_obraprinc" é o status da obra principal; "status_pagamento"; "liber_financ" é a data de liberação financeira; há diferença entre o "valor_planilha" e "valor_contratual_planilha", enquanto o primeiro diz respeito ao valor autorizado, o segundo é o valor devidamente licitado;
+
+Problema, há duas colunas de percentual medido aditivo 1, e nenhuma para o aditivo 2
