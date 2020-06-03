@@ -1,0 +1,17 @@
+Perguntas interessantes.
+
+## TERMOS DE COMPROMISSO
+
+1 - Quão significativo é o fator "final do ano" na celebração de termos? Interessante rodar uma regressão linear entre o dia do ano e o valor celebrado.
+
+R: A partir da visualização, parece-me interessantes investigar os termos emitidos em dezembro,
+especialmente em 2012, 2015, 2016 e 2018. Desisti por hora da mensuração do impacto do fator "final do ano".
+
+2 - Há um acréscimo enorme em celebrações de termos em alguns anos, em quais regionais esse acréscimo foi acumulado?
+
+3 - Há mudança nos tipos de obra emitidas por TC no final do ano?
+
+## LIBERAÇÃO FINANCEIRA
+
+
+## TEMPO ENTRE CELEBRAÇÃO DO TC/HOMOLOGAÇÃO LIBERAÇÃO

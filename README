@@ -10,4 +10,17 @@ No script "download-data.R", é feito o download da planilha do drive, bem como 
 
 Alguns detalhes sobre os novos nomes: "predio" é se é anexo ou principal; "ocupação" é a forma de ocupação; "data_tc" é a data de emissão do termo de compromisso; "status_obraprinc" é o status da obra principal; "status_pagamento"; "liber_financ" é a data de liberação financeira; há diferença entre o "valor_planilha" e "valor_contratual_planilha", enquanto o primeiro diz respeito ao valor autorizado, o segundo é o valor devidamente licitado;
 
-Problema, há duas colunas de percentual medido aditivo 1, e nenhuma para o aditivo 2
+Problema, há duas colunas de percentual medido aditivo 1, e nenhuma para o aditivo 2, e também duas para valor de planilha do aditivo 2.
+
+IMPORTANTE: há de se distuinguir entre a data de elaboração do TC e a data de liberação financeira.
+
+
+Na pasta "figuras", serão colocados os gráficos e demais imagens geradas.
+
+
+
+Arquivos de análise:
+
+analise.R: Primeiras observações generalizadas, que vão suscitar as perguntas constantes no arquivo "Questões.txt".
+
+decomposicao_celebracao_termos.R: Script especial para análise das celebrações de termos de compromisso.

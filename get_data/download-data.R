@@ -39,7 +39,7 @@ new_names <- c("planilha", "n_sin", "n_tc", "valor_planilha",
                "avanc_fis", "valor_planilha_medicoes", "valor_autorizado_pgto",
                "valor_contrato_aditivo1", "perc_medido_aditivo1", "valor_pago_aditivo1",
                "desc_aditivo1", "valor_aditivo1", "empresa_aditivo1",
-               "valor_contrato_aditivo2", "perc_medido_aditivo1", 
+               "valor_contrato_aditivo2", "perc_medido_aditivo1b", 
                "valor_pago_aditivo2", "desc_aditivo2", "valor_aditivo2",
                "empresa_aditivo2", "valor_contrato_aditivo3", "perc_medido_aditivo3",
                "valor_pago_aditivo3", "desc_aditivo3", "valor_aditivo3",
@@ -49,9 +49,14 @@ new_names <- c("planilha", "n_sin", "n_tc", "valor_planilha",
                "avanc_fis_saldo1", "valor_medicoes_saldo1", "valor_pago_saldo1",
                "valor_planilha_saldo2", "tipo_obra_saldo2", "desc_obra_saldo2",
                "status_obra_saldo2", "inicio_obra_saldo2", "previsao_termino_saldo2",
-               "empresa_saldo2", "valor_planilha_saldo2", "avanc_fis_saldo2",
+               "empresa_saldo2", "valor_planilha_saldo2b", "avanc_fis_saldo2",
                "valor_medicoes_saldo2", "valor_pgto_saldo2", "observacoes", "data_atualizacao"
                ) ##Novos nomes
 
 
 names(termos) <- new_names
+
+
+unlink("get_data/planilha_dgrf.xlsx")
+
+saveRDS(termos, "rdata/relacao_termos.rds")
