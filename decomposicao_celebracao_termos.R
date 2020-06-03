@@ -91,8 +91,229 @@ ggplot(meses_termos, aes(x = mes_do_ano, y = prct)) +
 # SRE's decomposição ------------------------------------------------------
 
 # 2 - Há um acréscimo enorme em celebrações de termos em alguns anos, 
-# em quais regionais esse acréscimo foi acumulado?
+# em quais regionais esse acréscimo foi acumulado
+
+
+
+# 2015 --------------------------------------------------------------------
+
+termos_2015 <- obras %>% mutate(ano = year(data_tc)) %>% 
+  filter(ano == 2015)
+
+dez_termos_2015 <- termos_2015 %>% mutate(mes = month(data_tc)) %>% 
+ filter(mes == 12)
+
+outros_termos_2015 <- termos_2015 %>% mutate(mes = month(data_tc)) %>% 
+  filter(mes != 12)
+
+## Análise das SRE's 
+
+
+maiores_medias_outro <- outros_termos_2015 %>% group_by(ano, sre) %>% 
+  summarise(soma = sum(valor_planilha), 
+            media_mensal = mean(valor_planilha),
+            n_termos = n()) %>% 
+  mutate(prct = soma / sum(outros_termos_2015$valor_planilha),
+         prct_n = n_termos / nrow(outros_termos_2015)) %>% 
+  arrange(desc(prct)) %>% ## Percentual do valor mensal liberado
+  head(10) %>% 
+  pull(sre)
+
+
+
+maiores_medias_dez <- dez_termos_2015 %>% group_by(ano, sre) %>% 
+  summarise(soma = sum(valor_planilha), 
+            media_mensal = mean(valor_planilha),
+            n_termos = n()) %>% 
+  mutate(prct = soma / sum(dez_termos_2015$valor_planilha),
+         prct_n = n_termos / nrow(dez_termos_2015)) %>% 
+  arrange(desc(prct)) %>% ## Percentual do valor mensal liberado
+  head(10) %>% 
+  pull(sre)
+
+## Nesse ponto estou confrontando as maiores médias mensais
+## de geração de tcs, com 
+
+maiores_medias_outro[maiores_medias_outro %in% maiores_medias_dez]
+
+## "SRE TEÓFILO OTONI"   "SRE METROPOLITANA B" apenas estão entre as maiores medias
+## tanto em dezembro como no resto do ano.
+
+beneficiadas_015 <- maiores_medias_dez[!(maiores_medias_dez %in% maiores_medias_outro)]
+
+## [1] "SRE DIAMANTINA"    "SRE MONTES CLAROS" "SRE ARAÇUAÍ"       "SRE JANUÁRIA"      "SRE PARÁ DE MINAS"
+## [6] "SRE POUSO ALEGRE"  "SRE JANAÚBA"       "SRE ALMENARA" 
+
+
+# 2016 --------------------------------------------------------------------
+
+termos_2016 <- obras %>% mutate(ano = year(data_tc)) %>% 
+  filter(ano == 2016)
+
+dez_termos_2016 <- termos_2016 %>% mutate(mes = month(data_tc)) %>% 
+  filter(mes == 12)
+
+outros_termos_2016 <- termos_2016 %>% mutate(mes = month(data_tc)) %>% 
+  filter(mes != 12)
+
+## Análise das SRE's 
+
+
+maiores_medias_outro <- outros_termos_2016 %>% group_by(ano, sre) %>% 
+  summarise(soma = sum(valor_planilha), 
+            media_mensal = mean(valor_planilha),
+            n_termos = n()) %>% 
+  mutate(prct = soma / sum(outros_termos_2016$valor_planilha),
+         prct_n = n_termos / nrow(outros_termos_2016)) %>% 
+  arrange(desc(prct)) %>% ## Percentual do valor mensal liberado
+  head(10) %>% 
+  pull(sre)
+
+
+
+maiores_medias_dez <- dez_termos_2016 %>% group_by(ano, sre) %>% 
+  summarise(soma = sum(valor_planilha), 
+            media_mensal = mean(valor_planilha),
+            n_termos = n()) %>% 
+  mutate(prct = soma / sum(dez_termos_2016$valor_planilha),
+         prct_n = n_termos / nrow(dez_termos_2016)) %>% 
+  arrange(desc(prct)) %>% ## Percentual do valor mensal liberado
+  head(10) %>% 
+  pull(sre)
+
+## Nesse ponto estou confrontando as maiores médias mensais
+## de geração de tcs, com 
+
+maiores_medias_outro[maiores_medias_outro %in% maiores_medias_dez]
+
+## "SRE TEÓFILO OTONI"   "SRE METROPOLITANA B" apenas estão entre as maiores medias
+## tanto em dezembro como no resto do ano.
+
+beneficiadas_016 <- maiores_medias_dez[!(maiores_medias_dez %in% maiores_medias_outro)]
 
 
 
   
+
+# 2017 --------------------------------------------------------------------
+
+termos_2017 <- obras %>% mutate(ano = year(data_tc)) %>% 
+  filter(ano == 2017)
+
+dez_termos_2017 <- termos_2017 %>% mutate(mes = month(data_tc)) %>% 
+  filter(mes == 12)
+
+outros_termos_2017 <- termos_2017 %>% mutate(mes = month(data_tc)) %>% 
+  filter(mes != 12)
+
+## Análise das SRE's 
+
+
+maiores_medias_outro <- outros_termos_2017 %>% group_by(ano, sre) %>% 
+  summarise(soma = sum(valor_planilha), 
+            media_mensal = mean(valor_planilha),
+            n_termos = n()) %>% 
+  mutate(prct = soma / sum(outros_termos_2017$valor_planilha),
+         prct_n = n_termos / nrow(outros_termos_2017)) %>% 
+  arrange(desc(prct)) %>% ## Percentual do valor mensal liberado
+  head(10) %>% 
+  pull(sre)
+
+
+
+maiores_medias_dez <- dez_termos_2017 %>% group_by(ano, sre) %>% 
+  summarise(soma = sum(valor_planilha), 
+            media_mensal = mean(valor_planilha),
+            n_termos = n()) %>% 
+  mutate(prct = soma / sum(dez_termos_2017$valor_planilha),
+         prct_n = n_termos / nrow(dez_termos_2017)) %>% 
+  arrange(desc(prct)) %>% ## Percentual do valor mensal liberado
+  head(10) %>% 
+  pull(sre)
+
+## Nesse ponto estou confrontando as maiores médias mensais
+## de geração de tcs, com 
+
+maiores_medias_outro[maiores_medias_outro %in% maiores_medias_dez]
+
+## "SRE TEÓFILO OTONI"   "SRE METROPOLITANA B" apenas estão entre as maiores medias
+## tanto em dezembro como no resto do ano.
+
+beneficiadas_017 <- maiores_medias_dez[!(maiores_medias_dez %in% maiores_medias_outro)]
+
+
+
+
+# 2018 --------------------------------------------------------------------
+
+termos_2018 <- obras %>% mutate(ano = year(data_tc)) %>% 
+  filter(ano == 2018)
+
+dez_termos_2018 <- termos_2018 %>% mutate(mes = month(data_tc)) %>% 
+  filter(mes == 12)
+
+outros_termos_2018 <- termos_2018 %>% mutate(mes = month(data_tc)) %>% 
+  filter(mes != 12)
+
+## Análise das SRE's 
+
+
+maiores_medias_outro <- outros_termos_2018 %>% group_by(ano, sre) %>% 
+  summarise(soma = sum(valor_planilha), 
+            media_mensal = mean(valor_planilha),
+            n_termos = n()) %>% 
+  mutate(prct = soma / sum(outros_termos_2018$valor_planilha),
+         prct_n = n_termos / nrow(outros_termos_2018)) %>% 
+  arrange(desc(prct)) %>% ## Percentual do valor mensal liberado
+  head(10) %>% 
+  pull(sre)
+
+
+
+maiores_medias_dez <- dez_termos_2018 %>% group_by(ano, sre) %>% 
+  summarise(soma = sum(valor_planilha), 
+            media_mensal = mean(valor_planilha),
+            n_termos = n()) %>% 
+  mutate(prct = soma / sum(dez_termos_2018$valor_planilha),
+         prct_n = n_termos / nrow(dez_termos_2018)) %>% 
+  arrange(desc(prct)) %>% ## Percentual do valor mensal liberado
+  head(10) %>% 
+  pull(sre)
+
+## Nesse ponto estou confrontando as maiores médias mensais
+## de geração de tcs, com 
+
+maiores_medias_outro[maiores_medias_outro %in% maiores_medias_dez]
+
+## "SRE TEÓFILO OTONI"   "SRE METROPOLITANA B" apenas estão entre as maiores medias
+## tanto em dezembro como no resto do ano.
+
+beneficiadas_018 <- maiores_medias_dez[!(maiores_medias_dez %in% maiores_medias_outro)]
+
+
+
+
+# Avaliando SRE's "beneficiadas" ------------------------------------------
+
+### Tomo por beneficiadas aquelas sres que não constavam na media mensal do ano e
+### foram as maiores contempladas em dezembro.
+
+
+beneficiadas <- c(beneficiadas_015,
+                  beneficiadas_016,
+                  beneficiadas_017,
+                  beneficiadas_018)
+
+table(beneficiadas) %>% sort(decreasing = TRUE)
+
+
+
+
+
+
+# SRE Diamantina ----------------------------------------------------------
+
+#Observando que Diamantina esteve entre as mais beneficiadas cabe fazer uma análise melhor.
+
+#Por exemplo: quão acima foi o valor de dezembro pra ela em relação aos outros meses?
+## Houve mudança nos tipos de obra?
