@@ -1,0 +1,134 @@
+---
+title: "Análise de latência em licitações"
+author: "DGRF"
+date: "15/06/2020"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introdução e saneamento dos dados
+
+Este relatório tem por objetivo analisar o que se chamará de latência na licitação: o tempo decorrido entre a **celebração do termo de compromisso e a homologação do processo licitatório**. Dessa forma, temos como latência o valor $L$ em dias corridos, onde $L = C - H$, sendo $C$ a data de celebração do termo, e $H$ a data de homologação. Para realização dos cálculos com as datas, é utilizado o pacote *lubridate* (https://lubridate.tidyverse.org/), que permite a realização de cálculos aritméticos com datas em termos de dias corridos.
+
+Para isso, será utilizada a planilha de acompanhamento de termos, utilizada pela Diretoria de Gestão de Rede Física. A planilha encontra-se disponibilizada no link: https://docs.google.com/spreadsheets/u/1/d/1lx9F6m2p9iJzsB91OfwtYoiBtRBKKGk5QieuouBDXDU/edit?usp=drive_web&ouid=112067781419992811065. A análise das informações se dará por meio do software RStudio, com a utilização de bibliotecas específicas, abaixo instaladas.
+
+```{r biblioteca, message=FALSE, warning=FALSE}
+library(tidyverse) ## Para manipulação dos dados e gráficos.
+library(lubridate) ## Para cálculos com datas.
+library(DT) ## Para impressão das tabelas.
+```
+
+
+Para análise das informações, foi realizado o download da mesma, diretamente via GoogleDrive, e tratamento de sua estrutura. Esse procedimento foi realizado em script próprio e a base de dados foi salva como o objeto "relacao_termos.rds". Tal objeto será lido e convertido como o item "obras".
+
+```{r leitura-dados}
+obras <- readRDS("rdata/relacao_termos.rds")
+```
+
+
+Primeiramente foram constatados alguns possíveis erros e saneados dados. Primeiro, foram consideradas para análise somente as obras com datas de celebração do termo e homologação informadas. Além disso, **datas de homologação anteriores à data de celebração do respectivo termo foram descartadas**, por indicar possível erro no preenchimento da planilha. 
+
+```{r saneamento, echo = FALSE}
+
+obras_saneadas <- obras %>% filter(!(is.na(data_tc)) & !(is.na(data_homolog))) %>%
+  mutate(delay = data_homolog - data_tc) %>% ##delay corresponde a latencia
+  filter(delay > 0)
+
+```
+
+
+Após esse tratamento, obtemos para análise um escopo de **`r format(nrow(obras_saneadas), big.mark = ".")`** obras, representando **`r format((nrow(obras_saneadas) / nrow(obras) * 100), decimal.mark = ",", digits = 4)` %** do total de **`r format(nrow(obras), big.mark = ".")`**.
+
+
+## Informações gerais
+
+A título de comparação, primeiro serão apresentados os dados gerais no que diz respeito à latência licitatória em dias corridos
+.
+```{r geral, echo=FALSE}
+ obras_saneadas %>% 
+  summarise(n_obras = n(),
+            media_delay = mean(delay), 
+            min_delay = min(delay),
+            max_delay = max(delay),
+            sd_delay = sd(delay)) %>% 
+  mutate(media_delay = round(media_delay, digits = 0),
+         min_delay = round(min_delay, digits = 0),
+         max_delay = round(max_delay, digits = 0),
+         sd_delay = round(sd_delay, digits = 0)) %>% 
+  datatable(rownames = FALSE, colnames = c("Número de 
+                                           obras", "Latência média", "Latência mínima",
+                         "Latência máxima", "Desvio Padrão"),
+            options = list(
+              columnDefs = list(list(className = 'dt-center', targets = "_all")),
+              searching = FALSE ##Removendo campo pesquisa
+))
+
+
+
+```
+**Tabela 1: Latência geral**
+
+Lembrando que o  desvio padrão ($\sigma$) é calculado da seguinte maneira  $\sigma=\sqrt{\frac{1}{N-1}\sum_{i=1}^N(x_i-\bar{x})^2}$. Sendo a raiz quadrada da variância, indica a dispersão dos valores de latência ($x$) divergem em torno da média ($\bar{x}$).
+
+
+## Latência por tipo de obra
+
+
+A seguir apresenta-se as mesmas informações da Tabela 1, especificando pelos tipos de obra especificados na planilha:
+
+```{r df_tipo_obra, echo = FALSE}
+tipo_obra <- obras_saneadas %>% filter(!(is.na(data_tc)) & !(is.na(data_homolog))) %>%
+  mutate(delay = data_homolog - data_tc) %>%
+  filter(delay > 0) %>% group_by(tipo_obra) %>% 
+  summarise(n_obras = n(),
+            media_delay = mean(delay),
+            min_delay = min(delay),
+            max_delay = max(delay),
+            sd_delay = sd(delay)) %>% 
+  arrange(desc(media_delay)) %>% 
+  mutate(media_delay = round(media_delay, digits = 0),
+         min_delay = round(min_delay, digits = 0),
+         max_delay = round(max_delay, digits = 0),
+         sd_delay = round(sd_delay, digits = 0)) 
+
+tipo_obra %>%
+         datatable(rownames = FALSE, colnames = c("Número de 
+                                           obras", "Latência média", "Latência mínima",
+                         "Latência máxima", "Desvio Padrão"),
+            options = list(
+              columnDefs = list(list(className = 'dt-center', targets = "_all")),
+              searching = FALSE ##Removendo campo pesquisa
+))
+  
+```
+
+
+Para melhor visualização, abaixo segue gráfico com os valores de latência por tipo de obra, com destaque para a média geral.
+
+```{r plot_tipo, echo = FALSE, warning=FALSE, message=FALSE}
+
+tipo_obra %>%
+ggplot(aes(x = tipo_obra)) +
+  geom_col(aes(y = media_delay), fill = "red", col = "black") +
+  geom_hline(yintercept = 393, size = 1, linetype = "dashed") +
+  geom_label(aes(y = media_delay, label = media_delay), fill = "#ff9999", fontface = "bold") +
+  labs(title = "Latência em dias corridos por tipos de obra",
+       caption = "A linha pontilhada representa a média geral") +
+  coord_flip() +
+  theme_bw() +
+  theme(axis.title = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid = element_blank(),
+        panel.border = element_blank())
+```
+
+## Latência por SRE
+
+## Latência por VALOR
