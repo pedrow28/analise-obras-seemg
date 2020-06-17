@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Este relatório tem por objetivo analisar o que se chamará de latência na licitação: o tempo decorrido entre a **celebração do termo de compromisso e a homologação do processo licitatório**. Dessa forma, temos como latência o valor $L$ em dias corridos, onde $L = C - H$, sendo $C$ a data de celebração do termo, e $H$ a data de homologação. Para realização dos cálculos com as datas, é utilizado o pacote *lubridate* (https://lubridate.tidyverse.org/), que permite a realização de cálculos aritméticos com datas em termos de dias corridos.
 
-Para isso, será utilizada a planilha de acompanhamento de termos, utilizada pela Diretoria de Gestão de Rede Física. A planilha encontra-se disponibilizada no link: https://docs.google.com/spreadsheets/u/1/d/1lx9F6m2p9iJzsB91OfwtYoiBtRBKKGk5QieuouBDXDU/edit?usp=drive_web&ouid=112067781419992811065. A análise das informações se dará por meio do software RStudio, com a utilização de bibliotecas específicas, abaixo instaladas.
+Para isso, será utilizada a planilha de acompanhamento de termos, utilizada pela Diretoria de Gestão de Rede Física. A planilha encontra-se disponibilizada no link: https://docs.google.com/spreadsheets/u/1/d/1lx9F6m2p9iJzsB91OfwtYoiBtRBKKGk5QieuouBDXDU/edit?usp=drive_web&ouid=112067781419992811065. A análise das informações se dará por meio do software RStudio, com a utilização de bibliotecas específicas, instaladas conforme código abaixo:
 
 ```{r biblioteca, message=FALSE, warning=FALSE}
 library(tidyverse) ## Para manipulação dos dados e gráficos.
@@ -25,7 +25,7 @@ library(DT) ## Para impressão das tabelas.
 ```
 
 
-Para análise das informações, foi realizado o download da mesma, diretamente via GoogleDrive, e tratamento de sua estrutura. Esse procedimento foi realizado em script próprio e a base de dados foi salva como o objeto "relacao_termos.rds". Tal objeto será lido e convertido como o item "obras".
+Para análise das informações, foi realizado o download da planilha diretamente via GoogleDrive, com posterior tratamento de sua estrutura. Esse procedimento foi realizado em script próprio e a base de dados foi salva como o objeto "relacao_termos.rds". Tal objeto será lido e convertido como o item "obras".
 
 ```{r leitura-dados}
 obras <- readRDS("rdata/relacao_termos.rds")

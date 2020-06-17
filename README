@@ -17,6 +17,7 @@ IMPORTANTE: há de se distuinguir entre a data de elaboração do TC e a data de
 
 Na pasta "figuras", serão colocados os gráficos e demais imagens geradas.
 
+O arquivo "gerenciamento_arquivos.sh" é um arquivo bash para gerenciamento dos arquivos no diretório.
 
 
 Arquivos de análise:
@@ -24,3 +25,6 @@ Arquivos de análise:
 analise.R: Primeiras observações generalizadas, que vão suscitar as perguntas constantes no arquivo "Questões.txt".
 
 decomposicao_celebracao_termos.R: Script especial para análise das celebrações de termos de compromisso.
+
+
+Por sugestão da Maria Angelica, vou juntar as datas de admissão do processo no script "join-coordplanejamento.R".
